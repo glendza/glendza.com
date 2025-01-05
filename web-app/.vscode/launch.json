@@ -1,0 +1,19 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Glendza",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "glendza.web_app.manage",
+      "console": "integratedTerminal",
+      "justMyCode": false,
+      "django": true,
+      "envFile": "${workspaceFolder}/.env",
+      "args": [
+        "runserver",
+        "8123",
+      ]
+    },
+  ],
+}
