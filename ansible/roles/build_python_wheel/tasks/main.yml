@@ -1,0 +1,20 @@
+- name: Ensure build dependencies are installed locally
+  ansible.builtin.command: python -m pip install --upgrade build
+  changed_when: false
+
+- name: Build the Python package locally
+  ansible.builtin.command: python -m build
+  args:
+    chdir: "{{ package_source_dir }}"
+  register: build_output
+
+- name: Find the generated wheel file
+  ansible.builtin.find:
+    paths: "{{ package_dist_dir }}"
+    patterns: "*.whl"
+  register: wheel_file
+
+- name: Ensure a wheel file was found
+  ansible.builtin.fail:
+    msg: "No wheel file found in the dist directory!"
+  when: wheel_file.matched == 0

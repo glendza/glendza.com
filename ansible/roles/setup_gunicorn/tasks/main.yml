@@ -1,0 +1,44 @@
+- name: Install Gunicorn
+  become: false
+  become_user: "{{ app_user }}"
+  pip:
+    name: gunicorn=={{ gunicorn_version }}
+    virtualenv: "{{ virtualenv_path }}"
+    state: present
+
+- name: "Ensure {{ sock_path | dirname }} directory exists"
+  become: true
+  file:
+    path: "{{ sock_path | dirname }}"
+    state: directory
+    owner: "{{ app_user }}"
+    group: "{{ app_group }}"
+    mode: '0755'
+
+- name: Create gunicorn user
+  user:
+    name: "{{ gunicorn_user }}"
+    shell: /bin/bash
+    groups: "{{ app_group }}"
+    state: present
+
+- name: Populate the gunicorn service file
+  become: true
+  template:
+    src: gunicorn.service.j2
+    dest: /etc/systemd/system/gunicorn.service
+  register: gunicorn_unit_changed
+
+- name: Reload systemd daemon
+  become: true
+  ansible.builtin.systemd:
+    daemon_reload: yes
+  when: gunicorn_unit_changed is changed
+
+- name: Restart gunicorn service
+  become: true
+  systemd:
+    name: gunicorn
+    state: restarted
+    enabled: yes
+  when: gunicorn_unit_changed is changed

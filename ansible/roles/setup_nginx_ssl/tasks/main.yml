@@ -1,0 +1,19 @@
+- name: Update Nginx configuration for SSL
+  become: true
+  template:
+    src: nginx.ssl.conf.j2
+    dest: /etc/nginx/sites-available/{{ app_name }}
+  register: nginx_config_changed
+
+- name: Reload systemd daemon
+  become: true
+  ansible.builtin.systemd:
+    daemon_reload: yes
+  when: nginx_config_changed is changed
+
+- name: Reload Nginx service if config changed
+  become: true
+  ansible.builtin.systemd:
+    name: nginx
+    state: reloaded
+  when: nginx_config_changed is changed

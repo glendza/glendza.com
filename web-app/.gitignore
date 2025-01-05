@@ -23,3 +23,7 @@ tests/report/
 
 # DB data:
 *.sqlite3
+
+# Static / media files
+src/glendza/web_app/staticfiles/
+src/glendza/web_app/media/
