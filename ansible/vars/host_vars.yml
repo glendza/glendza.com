@@ -1,0 +1,14 @@
+app_domain: glendza.com
+app_user: glendza
+app_group: glendza
+app_name: glendza
+app_python_version: 3.13
+virtualenv_path: /home/glendza/glendza_env
+package_source_dir: "{{ playbook_dir }}/../../web-app"
+package_dist_dir: "{{ playbook_dir }}/../../web-app/dist"
+wheel_dist_dir: /home/glendza/wheels/
+app_env_file_path: /home/glendza/env/.env
+app_wsgi_application: glendza.web_app.wsgi:application
+app_static_dir: /var/www/glendza/static
+app_media_dir: /var/www/glendza/media
+app_db_dir: /var/lib/glendza

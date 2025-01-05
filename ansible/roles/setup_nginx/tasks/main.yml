@@ -1,0 +1,93 @@
+- name: Install Nginx
+  apt:
+    name: nginx
+    state: present
+
+- name: Create nginx user
+  become: true
+  user:
+    name: "{{ nginx_user }}"
+    shell: /bin/bash
+    groups: "{{ app_group }}"
+    state: present
+
+- name: Set permissions for Nginx log directory
+  become: true
+  ansible.builtin.file:
+    path: /var/log/nginx
+    owner: "{{ nginx_user }}"
+    group: "{{ app_group }}"
+    mode: '0755'
+
+- name: Set permissions for Nginx log files
+  become: true
+  ansible.builtin.file:
+    path: "/var/log/nginx/{{ item }}"
+    owner: "{{ nginx_user }}"
+    group: "{{ app_group }}"
+    mode: '0644'
+  with_items:
+    - access.log
+    - error.log
+    - certbot_access.log
+    - certbot_error.log
+
+- name: Create the /run/nginx directory
+  become: true
+  ansible.builtin.file:
+    path: /run/nginx
+    state: directory
+    owner: "{{ nginx_user }}"
+    group: "{{ app_group }}"
+    mode: '0755'
+    recurse: yes
+
+- name: "Set correct permissions for {{ nginx_pid_file }}"
+  become: true
+  ansible.builtin.file:
+    path: "{{ nginx_pid_file }}"
+    state: touch
+    owner: "{{ nginx_user }}"
+    group: "{{ app_group }}"
+    mode: '0644'
+
+- name: Configure Nginx
+  become: true
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/sites-available/{{ app_name }}
+    force: yes
+
+- name: Enable Nginx site
+  become: true
+  command:
+    cmd: "ln -s /etc/nginx/sites-available/{{ app_name }} /etc/nginx/sites-enabled/{{ app_name }}"
+    creates: "/etc/nginx/sites-enabled/{{ app_name }}"
+
+- name: Ensure the correct user is set in nginx.conf
+  lineinfile:
+    path: /etc/nginx/nginx.conf
+    regexp: '^user\s+.*;'
+    line: 'user {{ nginx_user }} {{ app_group }};'
+    backup: yes
+
+- name: Populate Nginx systemd unit
+  become: true
+  template:
+    src: nginx.service.j2
+    dest: /etc/systemd/system/nginx.service
+    force: yes
+  register: nginx_config_changed
+
+- name: Reload systemd daemon
+  become: true
+  ansible.builtin.systemd:
+    daemon_reload: yes
+  when: nginx_config_changed is changed
+
+- name: Reload Nginx service if config changed
+  become: true
+  ansible.builtin.systemd:
+    name: nginx
+    state: reloaded
+  when: nginx_config_changed is changed

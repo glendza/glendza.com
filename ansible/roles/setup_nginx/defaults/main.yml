@@ -1,0 +1,4 @@
+---
+nginx_user: www-data
+service_restart_interval: 5
+nginx_pid_file: /run/nginx.pid

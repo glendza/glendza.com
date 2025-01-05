@@ -1,0 +1,10 @@
+- name: Setup server
+  hosts: web
+  become: true
+  vars_files:
+    - "{{ playbook_dir }}/../vars/host_vars.yml"
+  roles:
+    - setup_app_user
+    - setup_ansible_dependencies
+    - setup_firewall
+

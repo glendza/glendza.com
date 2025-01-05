@@ -63,10 +63,12 @@ WSGI_APPLICATION = "glendza.web_app.wsgi.application"
 
 
 # Database:
+DB_LOCATION = env.str("DB_LOCATION", BASE_DIR / "db.sqlite3")
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",  # TODO: Make configurable
+        "NAME": DB_LOCATION,
     }
 }
 
@@ -96,7 +98,16 @@ USE_TZ = True
 
 
 # Static files:
-STATIC_URL = "static/"  # TODO: Make configurable
+STATIC_URL = "static/"
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+STATIC_ROOT = env.str("STATIC_ROOT", BASE_DIR / "staticfiles")
+
+
+# Media files:
+MEDIA_URL = "media/"
+MEDIA_ROOT = env.str("MEDIA_ROOT", BASE_DIR / "media")
 
 
 # Default auto field:

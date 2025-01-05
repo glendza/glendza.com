@@ -1,0 +1,14 @@
+[Unit]
+Description=Run migrate and collectstatic for Django app
+After=network.target
+
+[Service]
+Type=oneshot
+User={{ gunicorn_user }}
+Group={{ app_group }}
+EnvironmentFile={{ app_env_file_path }}
+ExecStart={{ virtualenv_path }}/bin/gmanage migrate
+ExecStart={{ virtualenv_path }}/bin/gmanage collectstatic --noinput
+
+[Install]
+WantedBy=multi-user.target

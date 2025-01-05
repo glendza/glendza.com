@@ -1,0 +1,13 @@
+- name: Ensure the env directory exists
+  ansible.builtin.file:
+    path: "{{ env_file_path | dirname }}"
+    state: directory
+    mode: '0755'
+
+- name: Generate .env file
+  ansible.builtin.template:
+    src: .env.j2
+    dest: "{{ env_file_path }}"
+    force: yes
+  vars:
+    env_vars: "{{ env_vars }}"

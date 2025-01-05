@@ -1,0 +1,56 @@
+name: Deploy with Ansible
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - './ansible/**'
+      - './web-app/src/**'
+      - './web-app/pyproject.toml'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.12.7"
+
+      - name: Install Ansible
+        run: |
+          python -m pip install --upgrade pip
+          pip install ansible
+
+      - name: Configure SSH access
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.HOST_SSH_PRIVATE_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          eval "$(ssh-agent -s)"
+          ssh-add ~/.ssh/id_rsa
+          # Disable strict host key checking for non-interactive automation
+          echo -e "Host *\n  StrictHostKeyChecking no\n" >> ~/.ssh/config
+
+      - name: Create Ansible vault password file
+        env:
+          ANSIBLE_PASSWORD: ${{ secrets.ANSIBLE_PASSWORD }}
+        run: echo "$ANSIBLE_PASSWORD" > /tmp/ansible_password
+
+      - name: Run Ansible playbook
+        working-directory: ./ansible
+        run: |
+          ansible-playbook playbooks/main.yml --vault-password-file /tmp/ansible_password
+
+      - name: Cleanup sensitive files
+        run: |
+          rm -f /tmp/ansible_password
+          rm -f ~/.ssh/id_rsa

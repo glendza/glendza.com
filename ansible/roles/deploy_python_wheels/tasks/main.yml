@@ -1,0 +1,30 @@
+- name: Find all built wheel files
+  ansible.builtin.find:
+    paths: "{{ package_dist_dir }}/"                            # Path to the wheel files on localhost
+    patterns: "*.whl"                                           # Match all .whl files
+  register: wheel_files
+  delegate_to: localhost
+
+- name: Copy all wheel files to the target host
+  ansible.builtin.copy:
+    src: "{{ item.path }}"                                      # Path to each wheel file on localhost
+    dest: "{{ wheel_dist_dir }}"                                # Destination directory on the target host
+  become: false                                                 # Do not escalate privileges
+  become_user: "{{ app_user }}"                                 # Run the task as the app user
+  with_items: "{{ wheel_files.files }}"                         # Iterate over the list of found wheel files
+
+- name: Install all wheel files on the target host
+  ansible.builtin.pip:
+    name: "{{ wheel_dist_dir }}/{{ item.path | basename }}"     # Install each wheel file
+    state: present
+    virtualenv: "{{ virtualenv_path }}"                         # Path to the virtual environment
+    extra_args: "--force-reinstall"                             # Force reinstalling the package
+  with_items: "{{ wheel_files.files }}"                         # Iterate over the list of wheel files
+
+- name: Clean up the transferred wheel files on the target host
+  ansible.builtin.file:
+    path: "{{ wheel_dist_dir }}/{{ item.path | basename }}"     # Path to each wheel file on the target host
+    state: absent                                               # Delete the wheel file after installation
+  become: false
+  become_user: "{{ app_user }}"
+  with_items: "{{ wheel_files.files }}"                         # Iterate over all transferred wheel files
