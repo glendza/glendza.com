@@ -20,13 +20,15 @@ classifiers = [
 dependencies = [
   "Django>=5.1.2,<5.2",
   "django-environ>=0.11.2,<0.12",
+  "wagtail>=6.3.2,<6.4",
 ]
 
 [project.optional-dependencies]
 dev = [
-  "pytest>=8.3.3,<9",
   "black>=24.10.0,<25",
+  "django-debug-toolbar>=4.4.6,<5",
   "isort>=5.13.2,<6",
+  "pytest>=8.3.3,<9",
 ]
 
 [tool.hatch.build.targets.wheel]
