@@ -31,5 +31,4 @@
   ansible.builtin.systemd:
     name: "django-init.service"
     enabled: yes
-    state: started
-  when: django_init_service.changed
+    state: restarted

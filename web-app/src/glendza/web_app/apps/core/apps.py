@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class TestappConfig(AppConfig):
+class CoreConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
-    name = "glendza.web_app.apps.testapp"
+    name = "glendza.web_app.apps.core"

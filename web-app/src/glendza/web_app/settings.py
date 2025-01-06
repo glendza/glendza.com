@@ -18,6 +18,21 @@ ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 # Application definition:
 
 INSTALLED_APPS = [
+    # Wagtail:
+    "wagtail.contrib.forms",
+    "wagtail.contrib.redirects",
+    "wagtail.embeds",
+    "wagtail.sites",
+    "wagtail.users",
+    "wagtail.snippets",
+    "wagtail.documents",
+    "wagtail.images",
+    "wagtail.search",
+    "wagtail.admin",
+    "wagtail",
+    # Wagtail - third party:
+    "taggit",
+    "modelcluster",
     # Django apps:
     "django.contrib.admin",
     "django.contrib.auth",
@@ -26,11 +41,14 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "glendza.web_app.apps.user",
-    # TODO: Test app, remove later!
-    "glendza.web_app.apps.testapp",
     # Main website app:
-    # TODO
+    "glendza.web_app.apps.core",
 ]
+
+if DEBUG:
+    INSTALLED_APPS += [
+        "debug_toolbar",
+    ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -40,7 +58,15 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    # Wagtail:
+    "wagtail.contrib.redirects.middleware.RedirectMiddleware",
 ]
+
+if DEBUG:
+    MIDDLEWARE = [
+        "debug_toolbar.middleware.DebugToolbarMiddleware",
+        *MIDDLEWARE,
+    ]
 
 ROOT_URLCONF = "glendza.web_app.urls"
 
@@ -75,6 +101,7 @@ DATABASES = {
 
 # User model:
 AUTH_USER_MODEL = "user.User"
+
 
 # Password validation:
 AUTH_PASSWORD_VALIDATORS = [
@@ -116,5 +143,23 @@ MEDIA_ROOT = env.str("MEDIA_ROOT", BASE_DIR / "media")
 # Default auto field:
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+
 # Django Admin:
 DJANGO_ADMIN_URL = env.str("DJANGO_ADMIN_URL", "admin/")
+
+
+# Django debug toolbar:
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
+# Wagtail settings:
+
+WAGTAIL_ADMIN_URL = env.str("WAGTAIL_ADMIN_URL", "cms/")
+WAGTAILADMIN_BASE_URL = f"http://127.0.0.1:8123/{WAGTAIL_ADMIN_URL}"  # TODO
+WAGTAIL_SITE_NAME = "Glendza"
+WAGTAILDOCS_EXTENSIONS = ["csv", "docx", "key", "odt", "pdf", "pptx", "rtf", "txt", "xlsx", "zip"]
+
+
+# Reverse the default case-sensitive handling of tags:
+TAGGIT_CASE_INSENSITIVE = True
