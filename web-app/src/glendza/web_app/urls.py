@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.urls import include, path
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path(settings.DJANGO_ADMIN_URL, admin.site.urls),
     path("", include("glendza.web_app.apps.testapp.urls")),
 ]
 
