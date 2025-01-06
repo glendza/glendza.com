@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "glendza.web_app.apps.user",
     # TODO: Test app, remove later!
     "glendza.web_app.apps.testapp",
     # Main website app:
@@ -72,6 +73,8 @@ DATABASES = {
     }
 }
 
+# User model:
+AUTH_USER_MODEL = "user.User"
 
 # Password validation:
 AUTH_PASSWORD_VALIDATORS = [
@@ -112,3 +115,6 @@ MEDIA_ROOT = env.str("MEDIA_ROOT", BASE_DIR / "media")
 
 # Default auto field:
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Django Admin:
+DJANGO_ADMIN_URL = env.str("DJANGO_ADMIN_URL", "admin/")
