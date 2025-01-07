@@ -1,0 +1,12 @@
+{% load static wagtailcore_tags %}
+
+<footer>
+  <div class="responsive-container">
+    {{ copyright_text|safe }}
+    {% if github_url %}
+      <a href="{{ github_url }}" target="_blank" rel="noopener noreferrer">
+        <img src="{% static 'images/github.svg' %}" alt="GitHub" />
+      </a>
+    {% endif %}
+  </div>
+</footer>

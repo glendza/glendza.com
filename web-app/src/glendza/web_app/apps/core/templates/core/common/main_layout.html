@@ -1,0 +1,12 @@
+{% extends "core/common/base.html" %}
+
+{% load wagtailcore_tags layout_tags %}
+
+{% block body %}
+  {% header %}
+  <main class="responsive-container">
+    {% block main %}
+    {% endblock main %}
+  </main>
+  {% footer %}
+{% endblock body %}

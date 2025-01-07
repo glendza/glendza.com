@@ -1,3 +1,4 @@
+---
 - name: Ensure the required directories exist and are assigned to app_user
   ansible.builtin.file:
     path: "{{ item }}"
@@ -32,3 +33,6 @@
     name: "django-init.service"
     enabled: yes
     state: restarted
+  notify:
+    - Restart Gunicorn
+    - Restart Nginx

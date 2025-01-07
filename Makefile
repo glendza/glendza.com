@@ -10,15 +10,15 @@ ANSIBLE_DIR=./ansible
 
 # Setup SSH agent and add key:
 setup:
-	@echo "Setting up SSH agent..."
-	eval "$$(ssh-agent -s)" && \
-	ssh-add $${SSH_KEY_LOCATION}
 	@echo "Setting Visual Studio Code as the editor..."
 	export EDITOR="$${EDITOR}"
 	@echo "Setup complete."
 
 # Deploy using Ansible playbook:
 deploy: setup
+	@echo "Setting up SSH agent..."
+	eval "$$(ssh-agent -s)" && \
+	ssh-add $${SSH_KEY_LOCATION}
 	@echo "Running Ansible playbook..."
 	cd $${ANSIBLE_DIR} && \
 	ansible-playbook playbooks/main.yml --vault-password-file $${ANSIBLE_PASSWORD_FILE}
