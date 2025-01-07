@@ -3,14 +3,14 @@ from django.contrib import admin
 from django.urls import include, path, re_path
 from wagtail import urls as wagtail_urls
 from wagtail.admin import urls as wagtailadmin_urls
+from wagtail.contrib.sitemaps.views import sitemap
 from wagtail.documents import urls as wagtaildocs_urls
 
 urlpatterns = [
     path(settings.DJANGO_ADMIN_URL, admin.site.urls),
     path(settings.WAGTAIL_ADMIN_URL, include(wagtailadmin_urls)),
     path("documents/", include(wagtaildocs_urls)),
-    re_path("", include("glendza.web_app.apps.core.urls")),
-    re_path("", include(wagtail_urls)),
+    re_path(r"^sitemap.xml$", sitemap),
 ]
 
 
@@ -24,3 +24,8 @@ if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += [path("favicon.ico", RedirectView.as_view(url=settings.STATIC_URL + "core/images/favicon.ico"))]
     urlpatterns += debug_toolbar_urls()
+
+# Wagtail URLs (must be added last):
+urlpatterns += [
+    re_path("", include(wagtail_urls)),
+]

@@ -1,0 +1,116 @@
+/* -------------- Global variables -------------- */
+
+:root {
+  --header-height: 80px;
+  --footer-height: 80px;
+}
+
+/* -------------- Theming -------------- */
+
+:root {
+  --bg-color: #ffffff;
+  --text-color: #000000;
+  --primary-color: #007bff;
+}
+
+[data-theme="dark"] {
+  --bg-color: #121212;
+  --text-color: #ffffff;
+  --primary-color: #1e90ff;
+}
+
+/* -------------- Body -------------- */
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column; 
+  min-height: 100vh;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: Hack, monospace;
+}
+
+/* -------------- Responsive container -------------- */
+
+.responsive-container {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .responsive-container {
+    max-width: 720px; 
+    margin: 0 auto; 
+  }
+}
+
+@media (min-width: 1024px) {
+  .responsive-container {
+    max-width: 960px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .responsive-container {
+    max-width: 1200px; /
+  }
+}
+
+/* -------------- Header section -------------- */
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: var(--header-height);
+  height: var(--header-height);
+  box-sizing: border-box;
+}
+
+header .container {
+  display: flex;
+  justify-content: space-between;
+}
+
+header .logo-image {
+  max-height: var(--header-height);
+  height: auto; 
+  width: auto; 
+  display: block; 
+}
+
+/* -------------- Main section -------------- */
+
+/* -------------- Footer section -------------- */
+
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: var(--footer-height);
+  height: var(--footer-height);
+  box-sizing: border-box;
+}
+
+/* -------------- Hero section -------------- */
+
+.hero {
+  display: flex;
+  background-size: cover;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 1rem;
+  height: calc(100vh - var(--header-height) - var(--footer-height));
+}

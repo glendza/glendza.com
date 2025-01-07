@@ -1,0 +1,16 @@
+{% if menu_items %}
+  <nav>
+    <ul class="menu">
+      {% for item in menu_items %}
+        <li>
+          <a href="{{ item.link }}"
+             {% if item.open_in_new_tab %}
+               target="_blank" rel="noopener noreferrer"
+             {% endif %}>
+            {{ item.title }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </nav>
+{% endif %}
