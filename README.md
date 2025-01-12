@@ -1,5 +1,7 @@
 # Glendza
 
+![Web app deploy](https://github.com/glendza/glendza/actions/workflows/run-ansible.yml/badge.svg)
+
 # Deployment notes
 
 ## Github secrets
