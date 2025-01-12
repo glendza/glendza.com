@@ -1,11 +1,5 @@
 {
-  "[python]": {
-    "editor.defaultFormatter": "ms-python.black-formatter",
-    "editor.formatOnSave": true,
-    "editor.codeActionsOnSave": {
-      "source.organizeImports": "explicit"
-    },
-  },
+  
   "python.testing.pytestArgs": [
     "tests"
   ],
@@ -14,6 +8,20 @@
   "files.associations": {
     "*.html": "django-html"
   },
+  
+  "emmet.includeLanguages": {
+    "html": "html",
+    "django-html": "html",
+    "djlint": "html",
+    "css": "css"
+  },
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit"
+    },
+  },
   "[django-html]": {
     "editor.defaultFormatter": "monosans.djlint",
     "djlint.enableLinting": true,
@@ -21,9 +29,15 @@
     "editor.formatOnSave": true,
     "editor.tabSize": 2
   },
-  "emmet.includeLanguages": {
-    "html": "html",
-    "django-html": "html",
-    "djlint": "html"
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2
   },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2
+  },
+  "prettier.printWidth": 119,
 }

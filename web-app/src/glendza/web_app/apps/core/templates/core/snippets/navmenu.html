@@ -1,16 +1,36 @@
-{% if menu_items %}
-  <nav>
-    <ul class="menu">
-      {% for item in menu_items %}
-        <li>
-          <a href="{{ item.link }}"
-             {% if item.open_in_new_tab %}
-               target="_blank" rel="noopener noreferrer"
-             {% endif %}>
-            {{ item.title }}
-          </a>
-        </li>
-      {% endfor %}
-    </ul>
-  </nav>
-{% endif %}
+{% load icons %}
+
+<nav class="navmenu" id="navmenu">
+  <div class="navmenu__content" id="navmenu-content">
+    <div class="navmenu__close-section">
+      <button id="navmenu-close-button"
+              class="navmenu__close-button"
+              type="button"
+              aria-label="Close menu">
+        {% icon 'xmark' %}
+      </button>
+    </div>
+    <div class="navmenu__theme-toggle-section">
+      <button id="theme-toggle-button"
+              class="navmenu__theme-toggler-button"
+              type="button"
+              aria-label="Toggle theme">
+      </button>
+    </div>
+    {% if menu_items %}
+      <ul class="navmenu__menu-list">
+        {% for item in menu_items %}
+          <li class="navmenu__menu-item">
+            <a href="{{ item.link }}"
+               class="navmenu__menu-link"
+               {% if item.open_in_new_tab %}
+                 target="_blank" rel="noopener noreferrer"
+               {% endif %}>
+              {{ item.title }}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+</nav>
