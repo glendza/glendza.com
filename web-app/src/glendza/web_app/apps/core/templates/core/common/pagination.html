@@ -1,0 +1,26 @@
+{% if page_obj.has_other_pages %}
+  <nav class="pagination">
+    {% if page_obj.has_previous %}
+      <a href="?{{ page_var }}=1" class="pagination__link"><<</a>
+      <a href="?{{ page_var }}={{ page_obj.previous_page_number }}"
+         class="pagination__link"><</a>
+    {% endif %}
+    {% for i in paginator.page_range %}
+      {% if page_obj.number == i %}
+        <span class="pagination__current">{{ i }}</span>
+      {% elif i > page_obj.number|add:'-3' and i < page_obj.number|add:'3' %}
+        <a href="?{{ page_var }}={{ i }}" class="pagination__link">{{ i }}</a>
+      {% elif i == 1 or i == paginator.num_pages %}
+        <a href="?{{ page_var }}={{ i }}" class="pagination__link">{{ i }}</a>
+      {% elif i == page_obj.number|add:'-4' or i == page_obj.number|add:'4' %}
+        ...
+      {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+      <a href="?{{ page_var }}={{ page_obj.next_page_number }}"
+         class="pagination__link">></a>
+      <a href="?{{ page_var }}={{ paginator.num_pages }}"
+         class="pagination__link">>></a>
+    {% endif %}
+  </nav>
+{% endif %}

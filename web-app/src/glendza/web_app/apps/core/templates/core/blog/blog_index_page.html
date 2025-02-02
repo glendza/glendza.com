@@ -1,6 +1,6 @@
 {% extends "core/common/main_layout.html" %}
 
-{% load wagtailcore_tags %}
+{% load wagtailcore_tags pagination_tags %}
 
 {% block main %}
   <p>
@@ -15,4 +15,5 @@
       No blog posts available.
     </li>
   {% endfor %}
+  {% paginate all_blog_posts per_page=blog_posts_per_page page_var=pagination_page_param %}
 {% endblock main %}
