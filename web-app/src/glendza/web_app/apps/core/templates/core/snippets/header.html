@@ -10,7 +10,9 @@
         <img src="{{ logo.file.url }}" alt="Logo" class="header__logo-image" />
       {% else %}
         {% wagtail_site as current_site %}
-        {{ current_site.site_name }}
+        <span class="header__logo-text">
+          {{ current_site.site_name }}
+        </span>
       {% endif %}
     </a>
     <!-- Navigation Menu -->

@@ -1,13 +1,13 @@
-name: Deploy with Ansible
+name: Build and Deploy Web App
 
 on:
   push:
     branches:
       - main
     paths:
-      - './ansible/**'
-      - './web-app/src/**'
-      - './web-app/pyproject.toml'
+      - 'ansible/**'
+      - 'web-app/src/**'
+      - 'web-app/pyproject.toml'
   workflow_dispatch:
 
 jobs:
