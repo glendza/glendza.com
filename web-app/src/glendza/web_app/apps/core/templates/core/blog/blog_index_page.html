@@ -1,0 +1,18 @@
+{% extends "core/common/main_layout.html" %}
+
+{% load wagtailcore_tags %}
+
+{% block main %}
+  <p>
+    {{ page.intro }}
+  </p>
+  {% for blog_post in blog_posts %}
+    <li>
+      <a href="{{ blog_post.url }}">{{ blog_post.title }}</a> - {{ blog_post.first_published_at }}
+    </li>
+  {% empty %}
+    <li>
+      No blog posts available.
+    </li>
+  {% endfor %}
+{% endblock main %}
