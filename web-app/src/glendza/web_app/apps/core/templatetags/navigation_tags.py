@@ -7,4 +7,5 @@ register = template.Library()
 
 @register.simple_tag(name="site_root", takes_context=True)
 def get_site_root(context: RequestContext):
-    return Site.find_for_request(context["request"]).root_page
+    site = Site.find_for_request(context["request"])
+    return site.root_page if site else None
