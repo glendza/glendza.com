@@ -5,16 +5,18 @@
 <header class="header">
   <div class="header__container responsive-container">
     <!-- Logo -->
-    <a href="{% pageurl site_root %}" class="header__logo">
-      {% if logo %}
-        <img src="{{ logo.file.url }}" alt="Logo" class="header__logo-image" />
-      {% else %}
-        {% wagtail_site as current_site %}
-        <span class="header__logo-text">
-          {{ current_site.site_name }}
-        </span>
-      {% endif %}
-    </a>
+    {% if site_root %}
+      <a href="{% pageurl site_root %}" class="header__logo">
+        {% if logo %}
+          <img src="{{ logo.file.url }}" alt="Logo" class="header__logo-image" />
+        {% else %}
+          {% wagtail_site as current_site %}
+          <span class="header__logo-text">
+            {{ current_site.site_name }}
+          </span>
+        {% endif %}
+      </a>
+    {% endif %}
     <!-- Navigation Menu -->
     <button class="header__menu-toggler"
             id="navmenu-toggle-button"

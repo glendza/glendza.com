@@ -44,5 +44,5 @@ class BlogPage(Page):
     ]
 
     class Meta:
-        verbose_name = "blog entry page"
-        verbose_name_plural = "blog entry pages"
+        verbose_name = "blog page"
+        verbose_name_plural = "blog pages"

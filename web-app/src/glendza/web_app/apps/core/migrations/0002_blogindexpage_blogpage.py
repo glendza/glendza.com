@@ -61,8 +61,8 @@ class Migration(migrations.Migration):
                 ),
             ],
             options={
-                "verbose_name": "blog entry page",
-                "verbose_name_plural": "blog entry pages",
+                "verbose_name": "blog page",
+                "verbose_name_plural": "blog pages",
             },
             bases=("wagtailcore.page",),
         ),

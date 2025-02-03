@@ -35,6 +35,8 @@ INSTALLED_APPS = [
     # Wagtail - third party:
     "taggit",
     "modelcluster",
+    "django_recaptcha",
+    "wagtailcaptcha",
     # Django apps:
     "django.contrib.admin",
     "django.contrib.auth",
@@ -160,6 +162,19 @@ INTERNAL_IPS = [
     "127.0.0.1",
 ]
 
+# Email settings:
+EMAIL_BACKEND = env.str("EMAIL_BACKEND", "django.core.mail.backends.smtp.EmailBackend")
+EMAIL_HOST = env.str("EMAIL_HOST")
+EMAIL_PORT = env.int("EMAIL_PORT", 587)
+EMAIL_USE_TLS = env.bool("EMAIL_USE_TLS", True)
+EMAIL_HOST_USER = env.str("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = env.str("EMAIL_HOST_PASSWORD")
+EMAIL_USE_SSL = env.bool("EMAIL_USE_SSL", False)
+
+# Recaptcha settings:
+RECAPTCHA_PUBLIC_KEY = env.str("RECAPTCHA_PUBLIC_KEY")
+RECAPTCHA_PRIVATE_KEY = env.str("RECAPTCHA_PRIVATE_KEY")
+NOCAPTCHA = True
 
 # Wagtail settings:
 
