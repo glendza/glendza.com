@@ -1,5 +1,0 @@
----
-gunicorn_version: 23.0.0
-gunicorn_user: gunicorn
-sock_path: /run/gunicorn/gunicorn.sock
-service_restart_interval: 5

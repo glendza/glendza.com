@@ -1,4 +1,0 @@
----
-nginx_user: www-data
-service_restart_interval: 5
-sock_path: /run/gunicorn/gunicorn.sock

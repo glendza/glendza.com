@@ -1,0 +1,52 @@
+{% load static wagtailcore_tags wagtailuserbar %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="keywords" content="{{ page.keywords }}" />
+    <title>
+      {% block title %}
+        {% if page.seo_title %}
+          {{ page.seo_title }}
+        {% else %}
+          {{ page.title }}
+        {% endif %}
+        {% wagtail_site as current_site %}
+        {% if current_site and current_site.site_name %}
+          | {{ current_site.site_name }}
+        {% endif %}
+      {% endblock title %}
+    </title>
+    <meta name="description"
+          content="{{ page.description|default:"Default description" }}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="{% static 'core/images/favicon.ico' %}" type="image/x-icon" />
+    {# Force all links in the live preview panel to be opened in a new tab #}
+    {% if request.in_preview_panel %}
+      <base target="_blank" />
+    {% endif %}
+    {# Global stylesheets #}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
+    <link rel='stylesheet'
+          href='//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.css' />
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+    {% block extra_css %}
+      {# Override this in templates to add extra stylesheets #}
+    {% endblock extra_css %}
+  </head>
+  <body class="{% block body_class %}{% endblock body_class %}">
+    {% block body %}
+    {% endblock body %}
+    {% wagtailuserbar %}
+    {# Global javascript #}
+    <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+    <script src="https://unpkg.com/htmx.org@2.0.4"
+            integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+"
+            crossorigin="anonymous"></script>
+    {% block extra_js %}
+      {# Override this in templates to add extra javascript #}
+    {% endblock extra_js %}
+  </body>
+</html>

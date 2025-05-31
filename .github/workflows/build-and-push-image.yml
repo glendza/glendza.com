@@ -1,0 +1,21 @@
+name: Build & Push Docker Image
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  docker-build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Build and Push Docker Image
+        uses: ./.github/actions/docker-build
+        with:
+          registry-url: ${{ secrets.REGISTRY_URL }}
+          registry-username: ${{ secrets.REGISTRY_USERNAME }}
+          registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+          image-name: glendza
+          image-tag: latest  # Using 'latest' tag to save storage space and allow overwriting instead of accumulating multiple image versions

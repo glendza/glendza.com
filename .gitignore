@@ -1,3 +1,26 @@
-# Env files:
-!.env.*.example
-.env.*
+# Python
+*.egg-info
+*.pot
+*.py[co]
+.tox/
+__pycache__
+MANIFEST
+dist/
+docs/_build/
+docs/locale/
+tests/coverage_html/
+tests/.coverage
+build/
+tests/report/
+
+# Virtual environments
+.venv*
+
+# Env files
+.env*
+!.env.example
+
+# Local data:
+local_data/*
+dump/*
+dist/*
