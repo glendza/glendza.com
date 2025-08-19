@@ -1,2 +1,0 @@
-- import_playbook: setup_server.yml
-- import_playbook: build_and_deploy_app.yml

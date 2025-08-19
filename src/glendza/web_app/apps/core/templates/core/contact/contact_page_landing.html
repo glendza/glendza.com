@@ -1,0 +1,15 @@
+{% extends "core/common/main_layout.html" %}
+
+{% load static wagtailcore_tags %}
+
+{% block extra_css %}
+  <link rel="stylesheet"
+        type="text/css"
+        href="{% static 'css/contact-page.css' %}" />
+{% endblock extra_css %}
+{% block main %}
+  {{ page.title }}
+  <p>
+    {{ self.thank_you_text|richtext }}
+  </p>
+{% endblock main %}

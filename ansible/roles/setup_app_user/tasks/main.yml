@@ -1,7 +1,0 @@
-- name: Create a new user
-  user:
-    name: "{{ app_user }}"
-    shell: /bin/bash
-    groups: "{{ app_group }}"
-    state: present
-    createhome: yes
